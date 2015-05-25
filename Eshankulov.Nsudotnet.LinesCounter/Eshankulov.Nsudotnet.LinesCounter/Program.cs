@@ -13,18 +13,19 @@ namespace Eshankulov.Nsudotnet.LinesCounter
             string[] files = Directory.GetFiles(dir);
             bool forComments = false;
 
-            int count = paths.Sum(directory => CountLines(directory, typeOfFiles));
-
-            foreach (string types in typeOfFiles)
-            {
-                foreach (string f in files.Where(f => f.EndsWith(types)))
-                {
-                    using (StreamReader reader = new StreamReader(f))
-                    {
-                        string str = null;
-                        while ((str = reader.ReadLine()) != null)
-                        {
-                            str = str.Trim();
+            int counter = paths.Sum(directory => CountLines(directory, typeOfFiles));
+            
+     foreach (string types in typeOfFiles)
+     {
+       foreach (string f in files.Where(f => f.EndsWith(types)))
+        {
+        using (StreamReader reader = new StreamReader(f))
+          {
+        string str = null;
+             
+            while ((str = reader.ReadLine()) != null)
+           {
+                   str = str.Trim();
 
                  if (forComments)
                 {
@@ -51,12 +52,13 @@ namespace Eshankulov.Nsudotnet.LinesCounter
                         forComments = true;
                      }   
               }
-                            count++;
+                            counter++;
                         }
                     }
                 }
             }
-            return count;
+           
+            return counter;
         }
 
     }
@@ -64,10 +66,15 @@ namespace Eshankulov.Nsudotnet.LinesCounter
     class Program
     {
         static void Main(string[] args)
+
         {
             string curdirect = Directory.GetCurrentDirectory();
+            
             int res = LinesCounter.CountLines(curdirect, args);
+            
             Console.WriteLine(res);
+
+
             Console.ReadKey();
         }
     }
